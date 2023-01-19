@@ -1,0 +1,14 @@
+{
+  "devDependencies": {
+    "@babel/core": "^7.20.2"
+  },
+  "name": "brunodev",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "brunodev",
+  "license": "MIT",
+  "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1"
+  }
+}
