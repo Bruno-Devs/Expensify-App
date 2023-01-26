@@ -6,10 +6,28 @@ class IndecisionApp extends React.Component {
     this.handleAddOption = this.handleAddOption.bind(this);
     this.handleDeleteOption = this.handleDeleteOption.bind(this);
     this.state = {
-      options: props.options,
+      options: [],
     };
   }
 
+  componentDidMount() {
+    try {
+      const json = localStorage.getItem("options");
+      const options = JSON.parse(json);
+
+      if (options) {
+        this.setState(() => ({ options }));
+      }
+    } catch (error) {
+      // Do nothing at all
+    }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.options.length !== this.state.options.length) {
+      const json = JSON.stringify(this.state.options);
+      localStorage.setItem("options", json);
+    }
+  }
   handleDeleteOptions() {
     this.setState(() => ({ options: [] }));
   }
@@ -17,9 +35,9 @@ class IndecisionApp extends React.Component {
   handleDeleteOption(optionToRemove) {
     this.setState((prevState) => ({
       options: prevState.options.filter((option) => {
-        return optionToRemove !== option
-      })
-    }))
+        return optionToRemove !== option;
+      }),
+    }));
   }
 
   handlePick() {
@@ -60,9 +78,6 @@ class IndecisionApp extends React.Component {
   }
 }
 
-IndecisionApp.defaultProps = {
-  options: [],
-};
 
 const Header = (props) => {
   return (
@@ -74,7 +89,7 @@ const Header = (props) => {
 };
 
 Header.defaultProps = {
-  title: "indecision",
+  title: "Indecision",
 };
 
 const Action = (props) => {
@@ -91,6 +106,7 @@ const Options = (props) => {
   return (
     <div>
       <button onClick={props.handleDeleteOptions}>Remove All</button>
+      {props.options.length ===0 && <p>Please add options to get started.</p>}
       {props.options.map((option) => (
         <Option
           key={option}
@@ -133,6 +149,10 @@ class AddOption extends React.Component {
     e.target.elements.option.value = "";
 
     this.setState(() => ({ error }));
+
+    if (!error) {
+      e.target.elements.option.value = ''
+    }
   }
 
   render() {
