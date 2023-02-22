@@ -14,7 +14,7 @@ const AppRouter = () => (
       <Routes>
         <Route path="/" element={<ExpenseDasboardPage />} />
         <Route path="/create" element={<AddExpensePage />} />
-        <Route path="/edit/:id" element={<ExitExpensePage />} />
+        <Route path="/edit" element={<ExitExpensePage />} />
         <Route path="/help" element={<HelpPage />} />
         <Route path="*" element={<NotfoundPage />} />
       </Routes>
